@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
-class Example extends StatelessWidget{
-  const Example ({super.key});
+class Example extends StatelessWidget {
+  Example({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-return Scaffold(appBar: AppBar(centerTitle: true,),);
+    return Scaffold(
+      body: SafeArea(
+        child: Container(),
+      ),
+    );
   }
 }

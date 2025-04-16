@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/widgets/group_form/group_form_model.dart';
 
 class GroupForm extends StatefulWidget {
-  const GroupForm({super.key});
+  const GroupForm({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() {
-    return _GroupFormState();
-  }
+  _GroupFormState createState() => _GroupFormState();
 }
 
 class _GroupFormState extends State<GroupForm> {
@@ -15,51 +13,56 @@ class _GroupFormState extends State<GroupForm> {
 
   @override
   Widget build(BuildContext context) {
-    return GroupFormModelProvider(model: _model, child: const GroupFormBody());
+    return GroupFormModelProvider(
+      model: _model,
+      child: const _GroupFormBody(),
+    );
   }
 }
 
-class GroupFormBody extends StatelessWidget {
-  const GroupFormBody({super.key});
+class _GroupFormBody extends StatelessWidget {
+  const _GroupFormBody({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text('New Group'),
+        backgroundColor: const Color.fromARGB(232, 180, 121, 248),
         centerTitle: true,
-        title: const Text('Creating note'),
-        backgroundColor: const Color.fromARGB(255, 205, 146, 233),
       ),
-
       body: Center(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 12),
-          child: GroupName(),
+          child: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: _GroupName(),
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed:
-            () => GroupFormModelProvider.read(context)?.model.saveGroup(context),
-        child: Icon(Icons.done),
+        onPressed: () => GroupFormModelProvider.read(context)
+            ?.model
+            .saveGroup(context),
+        child: const Icon(Icons.done),
       ),
     );
   }
 }
 
-class GroupName extends StatelessWidget {
-  const GroupName({super.key});
+class _GroupName extends StatelessWidget {
+  const _GroupName({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final model = GroupFormModelProvider.read(context)?.model;
     return TextField(
-      decoration: InputDecoration(
+      autofocus: true,
+      decoration: const InputDecoration(
         border: OutlineInputBorder(),
         hintText: 'Group name',
       ),
       onChanged: (value) => model?.groupName = value,
       onEditingComplete: () => model?.saveGroup(context),
-      autofocus: true,
     );
   }
 }
