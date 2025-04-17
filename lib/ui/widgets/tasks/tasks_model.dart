@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo_app/domain/entity/group.dart';
 import 'package:todo_app/domain/entity/task.dart';
+import 'package:todo_app/ui/navigation/main_navigation.dart';
 
 class TasksModel extends ChangeNotifier {
-  int groupKey;
+  final int groupKey;
   late final Future<Box<Group>> _groupBox;
   var _tasks = <Task>[];
 
@@ -18,7 +19,7 @@ class TasksModel extends ChangeNotifier {
   }
 
   void showForm(BuildContext context) {
-    Navigator.of(context).pushNamed('/groups/tasks/form', arguments: groupKey);
+    Navigator.of(context).pushNamed(NavigationRoots.tasksForm, arguments: groupKey);
   }
 
   void _loadGroup() async {

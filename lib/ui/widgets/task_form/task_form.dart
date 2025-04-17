@@ -1,45 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:todo_app/widgets/task_form/task_form_model.dart';
-import 'package:todo_app/widgets/tasks/tasks_model.dart';
+import 'package:todo_app/ui/widgets/task_form/task_form_model.dart';
 
 class TaskForm extends StatefulWidget {
-  const TaskForm({Key? key}) : super(key: key);
+  final int groupKey;
+  const TaskForm({super.key, required this.groupKey});
 
   @override
   _TaskFormState createState() => _TaskFormState();
 }
 
 class _TaskFormState extends State<TaskForm> {
-  TaskFormModel? _model;
+  late final TaskFormModel _model;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    if (_model == null) {
-      final groupKey = ModalRoute.of(context)!.settings.arguments as int;
-      _model = TaskFormModel.TaskFormModel(groupKey: groupKey);
-    }
+  void initState() {
+    super.initState();
+    _model = TaskFormModel(groupKey: widget.groupKey);
   }
 
   @override
   Widget build(BuildContext context) {
     return TaskFormModelProvider(
-      model: _model!,
+      model: _model,
       child: const _TextFormBody(),
     );
   }
 }
 
 class _TextFormBody extends StatelessWidget {
-  const _TextFormBody({Key? key}) : super(key: key);
+  const _TextFormBody({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('New task'),
+        title: const Text('New mini note'),
         backgroundColor: const Color.fromARGB(232, 180, 121, 248),
         centerTitle: true,
       ),
@@ -61,7 +56,7 @@ class _TextFormBody extends StatelessWidget {
 }
 
 class _TaskText extends StatelessWidget {
-  const _TaskText({Key? key}) : super(key: key);
+  const _TaskText({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +68,7 @@ class _TaskText extends StatelessWidget {
       expands: true,
       decoration: const InputDecoration(
         border: InputBorder.none,
-        hintText: 'Task text',
+        hintText: 'Type here',
       ),
       onChanged: (value) => model?.taskText = value,
       onEditingComplete: () => model?.saveTask(context),

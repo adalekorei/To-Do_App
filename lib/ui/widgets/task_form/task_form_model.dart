@@ -5,10 +5,12 @@ import 'package:todo_app/domain/entity/group.dart';
 import 'package:todo_app/domain/entity/task.dart';
 
 class TaskFormModel {
-  int groupKey;
+  
+  final int groupKey;
   var taskText = '';
 
   TaskFormModel.TaskFormModel({required this.groupKey});
+  TaskFormModel({required this.groupKey});
 
   void saveTask(BuildContext context) async {
     if (taskText.isEmpty) return;

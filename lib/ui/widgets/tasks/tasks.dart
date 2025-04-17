@@ -1,38 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:todo_app/widgets/tasks/tasks_model.dart';
+import 'package:todo_app/ui/widgets/tasks/tasks_model.dart';
 
 class Tasks extends StatefulWidget {
-  const Tasks({Key? key}) : super(key: key);
+  final int groupKey;
+  const Tasks({super.key, required this.groupKey});
 
   @override
   _TasksState createState() => _TasksState();
 }
 
 class _TasksState extends State<Tasks> {
-  TasksModel? _model;
+  late final TasksModel _model;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    if (_model == null) {
-      final groupKey = ModalRoute.of(context)!.settings.arguments as int;
-      _model = TasksModel(groupKey: groupKey);
-    }
+  void initState() {
+    super.initState();
+   _model = TasksModel(groupKey: widget.groupKey);
   }
 
   @override
   Widget build(BuildContext context) {
     return TasksModelProvider(
-      model: _model!,
+      model: _model,
       child: const TasksBody(),
     );
   }
 }
 
 class TasksBody extends StatelessWidget {
-  const TasksBody({Key? key}) : super(key: key);
+  const TasksBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +51,7 @@ class TasksBody extends StatelessWidget {
 }
 
 class _TaskList extends StatelessWidget {
-  const _TaskList({Key? key}) : super(key: key);
+  const _TaskList({super.key});
 
   @override
   Widget build(BuildContext context) {
