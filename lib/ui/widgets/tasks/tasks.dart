@@ -2,9 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:todo_app/ui/widgets/tasks/tasks_model.dart';
 
-class Tasks extends StatefulWidget {
+class TaskConfiguration {
   final int groupKey;
-  const Tasks({super.key, required this.groupKey});
+  final String title;
+
+  TaskConfiguration(int key, String name, {required this.groupKey, required this.title});
+}
+
+class Tasks extends StatefulWidget {
+  
+  final TaskConfiguration configuration;
+  const Tasks({super.key, required this.configuration});
 
   @override
   _TasksState createState() => _TasksState();
@@ -16,7 +24,7 @@ class _TasksState extends State<Tasks> {
   @override
   void initState() {
     super.initState();
-   _model = TasksModel(groupKey: widget.groupKey);
+   _model = TasksModel(configuration: widget.configuration);
   }
 
   @override
@@ -26,6 +34,12 @@ class _TasksState extends State<Tasks> {
       child: const TasksBody(),
     );
   }
+
+  @override
+  Future<void> dispose() async {
+await _model.dispose();
+    super.dispose();
+  }
 }
 
 class TasksBody extends StatelessWidget {
@@ -34,7 +48,7 @@ class TasksBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = TasksModelProvider.watch(context)?.model;
-    final title = model?.group?.name ?? 'Tasks';
+    final title = model?.configuration.title ?? 'Tasks';
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
@@ -51,7 +65,7 @@ class TasksBody extends StatelessWidget {
 }
 
 class _TaskList extends StatelessWidget {
-  const _TaskList({super.key});
+  const _TaskList();
 
   @override
   Widget build(BuildContext context) {

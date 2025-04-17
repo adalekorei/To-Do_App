@@ -14,15 +14,18 @@ class _GroupsState extends State<Groups> {
 
   @override
   Widget build(BuildContext context) {
-    return GroupsModelProvider(
-      model: model,
-      child: const _GroupsBody(),
-    );
+    return GroupsModelProvider(model: model, child: const _GroupsBody());
+  }
+
+  @override
+  void dispose() async {
+    await model.dispose();
+    super.dispose();
   }
 }
 
 class _GroupsBody extends StatelessWidget {
-  const _GroupsBody({super.key});
+  const _GroupsBody();
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +37,8 @@ class _GroupsBody extends StatelessWidget {
       ),
       body: const _GroupList(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () =>
-            GroupsModelProvider.read(context)?.model.showForm(context),
+        onPressed:
+            () => GroupsModelProvider.read(context)?.model.showForm(context),
         child: const Icon(Icons.add),
       ),
     );
@@ -43,7 +46,7 @@ class _GroupsBody extends StatelessWidget {
 }
 
 class _GroupList extends StatelessWidget {
-  const _GroupList({super.key});
+  const _GroupList();
 
   @override
   Widget build(BuildContext context) {
@@ -63,36 +66,34 @@ class _GroupList extends StatelessWidget {
 
 class _GroupListRow extends StatelessWidget {
   final int indexInList;
-  const _GroupListRow({
-    Key? key,
-    required this.indexInList,
-  }) : super(key: key);
+  const _GroupListRow({Key? key, required this.indexInList}) : super(key: key);
 
-@override
-Widget build(BuildContext context) {
-  final model = GroupsModelProvider.read(context)!.model;
-  final group = model.groups[indexInList];
+  @override
+  Widget build(BuildContext context) {
+    final model = GroupsModelProvider.read(context)!.model;
+    final group = model.groups[indexInList];
 
-  return Slidable(
-    endActionPane: ActionPane(
-      motion: const ScrollMotion(),
-      children: [
-        SlidableAction(
-          onPressed: (context) => model.deleteGroup(indexInList),
-          backgroundColor: Colors.red,
-          foregroundColor: Colors.white,
-          icon: Icons.delete,
-          label: 'Delete',
-        ),
-      ],
-    ),
-    child: ColoredBox(
-      color: Colors.white,
-      child: ListTile(
-        title: Text(group.name),
-        trailing: const Icon(Icons.chevron_right),
-        onTap: () => model.showTasks(context, indexInList),
+    return Slidable(
+      endActionPane: ActionPane(
+        motion: const ScrollMotion(),
+        children: [
+          SlidableAction(
+            onPressed: (context) => model.deleteGroup(indexInList),
+            backgroundColor: Colors.red,
+            foregroundColor: Colors.white,
+            icon: Icons.delete,
+            label: 'Delete',
+          ),
+        ],
       ),
-    ),
-  );
-}}
+      child: ColoredBox(
+        color: Colors.white,
+        child: ListTile(
+          title: Text(group.name),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => model.showTasks(context, indexInList),
+        ),
+      ),
+    );
+  }
+}

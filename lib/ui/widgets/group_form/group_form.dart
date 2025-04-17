@@ -21,7 +21,7 @@ class _GroupFormState extends State<GroupForm> {
 }
 
 class _GroupFormBody extends StatelessWidget {
-  const _GroupFormBody({super.key});
+  const _GroupFormBody();
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class _GroupFormBody extends StatelessWidget {
 }
 
 class _GroupName extends StatelessWidget {
-  const _GroupName({super.key});
+  const _GroupName();
 
   @override
   Widget build(BuildContext context) {
