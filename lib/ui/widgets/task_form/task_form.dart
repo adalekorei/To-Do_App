@@ -20,10 +20,7 @@ class _TaskFormState extends State<TaskForm> {
 
   @override
   Widget build(BuildContext context) {
-    return TaskFormModelProvider(
-      model: _model,
-      child: const _TextFormBody(),
-    );
+    return TaskFormModelProvider(model: _model, child: const _TextFormBody());
   }
 }
 
@@ -32,6 +29,11 @@ class _TextFormBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final model = TaskFormModelProvider.watch(context)?.model;
+    final actionButton = FloatingActionButton(
+      onPressed: () => model?.saveTask(context),
+      child: const Icon(Icons.done),
+    );
     return Scaffold(
       appBar: AppBar(
         title: const Text('New mini note'),
@@ -46,11 +48,7 @@ class _TextFormBody extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () =>
-            TaskFormModelProvider.read(context)?.model.saveTask(context),
-        child: const Icon(Icons.done),
-      ),
+      floatingActionButton: model?.isValid == true ? actionButton : null,
     );
   }
 }
