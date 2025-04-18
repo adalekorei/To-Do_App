@@ -21,7 +21,7 @@ class TasksModel extends ChangeNotifier {
   void showForm(BuildContext context) {
     Navigator.of(
       context,
-    ).pushNamed(NavigationRoots.tasksForm, arguments: configuration.groupKey);
+    ).pushNamed(NavigationRoutes.tasksForm, arguments: configuration.groupKey);
   }
 
   Future<void> deleteTask(int taskIndex) async {
