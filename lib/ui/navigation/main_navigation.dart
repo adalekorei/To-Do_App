@@ -4,7 +4,7 @@ import 'package:todo_app/ui/widgets/groups/groups.dart';
 import 'package:todo_app/ui/widgets/task_form/task_form.dart';
 import 'package:todo_app/ui/widgets/tasks/tasks.dart';
 
-abstract class NavigationRoots {
+abstract class NavigationRoutes {
   static const groups = '/';
   static const groupsForm = '/form';
   static const tasks = '/tasks';
@@ -12,22 +12,22 @@ abstract class NavigationRoots {
 }
 
 class MainNavigation {
-  final initialRoute = NavigationRoots.groups;
+  final initialRoute = NavigationRoutes.groups;
   final routes = {
-    NavigationRoots.groups: (context) => const Groups(),
-    NavigationRoots.groupsForm: (context) => const GroupForm(),
+    NavigationRoutes.groups: (context) => const Groups(),
+    NavigationRoutes.groupsForm: (context) => const GroupForm(),
   };
 
   Route<Object> OnGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case NavigationRoots.tasks:
+      case NavigationRoutes.tasks:
         final configuration = settings.arguments as TaskConfiguration;
         return MaterialPageRoute(
           builder: (context) {
             return Tasks(configuration: configuration);
           },
         );
-      case NavigationRoots.tasksForm:
+      case NavigationRoutes.tasksForm:
         final groupKey = settings.arguments as int;
         return MaterialPageRoute(
           builder: (context) {
