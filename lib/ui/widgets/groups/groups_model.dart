@@ -20,7 +20,7 @@ class GroupsModel extends ChangeNotifier {
   }
 
   void showForm(BuildContext context) {
-    Navigator.of(context).pushNamed(NavigationRoots.groupsForm);
+    Navigator.of(context).pushNamed(NavigationRoutes.groupsForm);
   }
 
   Future<void> showTasks(BuildContext context, int groupIndex) async {
@@ -34,7 +34,7 @@ class GroupsModel extends ChangeNotifier {
       );
       Navigator.of(
         context,
-      ).pushNamed(NavigationRoots.tasks, arguments: configuration);
+      ).pushNamed(NavigationRoutes.tasks, arguments: configuration);
     }
   }
 
